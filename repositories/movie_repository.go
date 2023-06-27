@@ -25,7 +25,7 @@ func FindMovies(db *gorm.DB, term models.MovieDTO) []models.Movie {
 
 func FindMovieByID(db *gorm.DB, movieID string) (models.Movie, error) {
 	var movie models.Movie
-	result := db.First(movie, movieID)
+	result := db.First(&movie, movieID)
 	return movie, result.Error
 }
 

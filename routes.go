@@ -15,6 +15,6 @@ func RegisterRoutes(db *gorm.DB, e *mux.Router) {
 
 	e.HandleFunc("/movies", movieController.GetMovie).Methods(http.MethodGet)
 	e.HandleFunc("/create-movies", movieController.CreateMovie).Methods(http.MethodPost)
-	e.HandleFunc("/movies/{id}", movieController.UpdateMovie).Methods(http.MethodPut)
-	e.HandleFunc("/movies/{id}", movieController.WatchMovie).Methods(http.MethodPut)
+	e.HandleFunc("/movies/{movie_id}", movieController.UpdateMovie).Methods(http.MethodPut)
+	e.HandleFunc("/watch/{movie_id}", movieController.WatchMovie).Methods(http.MethodPut)
 }

@@ -1,6 +1,8 @@
 package services
 
 import (
+	"fmt"
+
 	"gorm.io/gorm"
 
 	"rocketin-movie/models"
@@ -28,6 +30,7 @@ func CreateNewMovie(db *gorm.DB, movie models.Movie) (models.Movie, error) {
 
 func WatchMovie(db *gorm.DB, movieID string) error {
 	movie, err := repositories.FindMovieByID(db, movieID)
+	fmt.Println("Sampe sini")
 	if err != nil {
 		return err
 	}

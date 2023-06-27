@@ -1,0 +1,88 @@
+{
+    "client": "Thunder Client",
+    "collectionName": "Rocketin",
+    "dateExported": "2023-06-27T17:43:43.850Z",
+    "version": "1.1",
+    "folders": [
+        {
+            "_id": "83e5e327-0268-494f-98d7-e7e87b28c284",
+            "name": "Movie",
+            "containerId": "",
+            "created": "2023-06-27T17:17:49.669Z",
+            "sortNum": 10000
+        }
+    ],
+    "requests": [
+        {
+            "_id": "a09a7d4b-39a2-4d72-9f8b-f5920df4bbcb",
+            "colId": "3f84e5d1-6694-4cac-9a79-54001e043504",
+            "containerId": "83e5e327-0268-494f-98d7-e7e87b28c284",
+            "name": "Find Movie",
+            "url": "localhost:8080/movies",
+            "method": "GET",
+            "sortNum": 20000,
+            "created": "2023-06-27T17:17:49.671Z",
+            "modified": "2023-06-27T17:41:04.616Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"title\": \"baru nih\",\n  \"description\": \"film seru 2023\",\n  \"artists\": \"jack, udin, miltha\",\n  \"genres\": \"action, comedy\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "e6e6c043-d183-47a5-95f1-0e4bd99f7f65",
+            "colId": "3f84e5d1-6694-4cac-9a79-54001e043504",
+            "containerId": "83e5e327-0268-494f-98d7-e7e87b28c284",
+            "name": "Create Movie",
+            "url": "localhost:8080/create-movies",
+            "method": "POST",
+            "sortNum": 30000,
+            "created": "2023-06-27T17:17:49.672Z",
+            "modified": "2023-06-27T17:34:18.505Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"title\": \"judulfilm cerita cinta\",\n  \"description\": \"waduh euy\",\n  \"duration\": 97,\n  \"artists\": \"jack, udin, miltha\",\n  \"genres\": \"romance, thriller\",\n  \"watch_url\": \"/home/rocketin/movies/aadc.mp4\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "f000dd91-d0af-4411-ac87-224452b2eaf3",
+            "colId": "3f84e5d1-6694-4cac-9a79-54001e043504",
+            "containerId": "83e5e327-0268-494f-98d7-e7e87b28c284",
+            "name": "Update Movie",
+            "url": "localhost:8080/movies/1",
+            "method": "PUT",
+            "sortNum": 40000,
+            "created": "2023-06-27T17:17:49.673Z",
+            "modified": "2023-06-27T17:37:54.410Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"title\": \"baru nih\",\n  \"description\": \"film seru 2023\",\n  \"duration\": 112,\n  \"artists\": \"jack, udin, miltha\",\n  \"genres\": \"action, comedy\",\n  \"watch_url\": \"/home/rocketin/movies/moana.mp4\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "db48d913-4cbb-4428-ad23-3b28b54ecec3",
+            "colId": "3f84e5d1-6694-4cac-9a79-54001e043504",
+            "containerId": "83e5e327-0268-494f-98d7-e7e87b28c284",
+            "name": "Watch Movie",
+            "url": "localhost:8080/watch/1",
+            "method": "PUT",
+            "sortNum": 50000,
+            "created": "2023-06-27T17:17:49.674Z",
+            "modified": "2023-06-27T17:31:30.438Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        }
+    ]
+}

@@ -3,15 +3,15 @@ package main
 import (
 	"rocketin-movie/models"
 
-	"gorm.io/driver/mysql"
+	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
 
 var con *gorm.DB
 
 func connect() *gorm.DB {
-	dsn := "your_username:your_password@tcp(localhost:3306)/your_database?parseTime=true"
-	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
+	dsn := "host=localhost user=jeddi dbname=moviedb port=5432 TimeZone=Asia/Jakarta"
+	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil {
 		panic("failed to connect database")
 	}
