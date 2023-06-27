@@ -1,0 +1,102 @@
+{
+    "client": "Thunder Client",
+    "collectionName": "Rocketin",
+    "dateExported": "2023-06-27T09:51:00.272Z",
+    "version": "1.1",
+    "folders": [
+        {
+            "_id": "799f242f-bdda-425c-b0a8-a1c93740882a",
+            "name": "Movie",
+            "containerId": "",
+            "created": "2023-06-27T05:13:32.096Z",
+            "sortNum": 10000
+        }
+    ],
+    "requests": [
+        {
+            "_id": "d45109db-bcff-4532-9ab0-43e07e9b87e9",
+            "colId": "348e470b-1988-4ad7-b1c2-4ab87b21c9bf",
+            "containerId": "799f242f-bdda-425c-b0a8-a1c93740882a",
+            "name": "GET All Movies",
+            "url": "localhost:8080/movies",
+            "method": "GET",
+            "sortNum": 10000,
+            "created": "2023-06-27T05:19:23.849Z",
+            "modified": "2023-06-27T05:21:19.030Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "299bc65a-9631-48e4-bdf1-021a9a69723a",
+            "colId": "348e470b-1988-4ad7-b1c2-4ab87b21c9bf",
+            "containerId": "799f242f-bdda-425c-b0a8-a1c93740882a",
+            "name": "Find Movie",
+            "url": "localhost:8080/movies",
+            "method": "GET",
+            "sortNum": 20000,
+            "created": "2023-06-27T09:39:57.729Z",
+            "modified": "2023-06-27T09:42:01.765Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"title\": \"judul film\",\n  \"description\": \"film seru 2023\",\n  \"artist\": \"jack, udin, miltha\",\n  \"genres\": \"action, comedy\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "18bd85c3-fcd4-45bb-8247-d351cf09fe19",
+            "colId": "348e470b-1988-4ad7-b1c2-4ab87b21c9bf",
+            "containerId": "799f242f-bdda-425c-b0a8-a1c93740882a",
+            "name": "Create Movie",
+            "url": "localhost:8080/movies",
+            "method": "POST",
+            "sortNum": 30000,
+            "created": "2023-06-27T09:42:10.324Z",
+            "modified": "2023-06-27T09:44:22.070Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"title\": \"judul film\",\n  \"description\": \"film seru 2023\",\n  \"duration\": 112,\n  \"artist\": \"jack, udin, miltha\",\n  \"genres\": \"action, comedy\",\n  \"watch_url\": \"/home/rocketin/movies/moana.mp4\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "61e7b199-4010-4b42-a74e-53a4ed12e993",
+            "colId": "348e470b-1988-4ad7-b1c2-4ab87b21c9bf",
+            "containerId": "799f242f-bdda-425c-b0a8-a1c93740882a",
+            "name": "Update Movie",
+            "url": "localhost:8080/movies/1",
+            "method": "PUT",
+            "sortNum": 40000,
+            "created": "2023-06-27T09:44:28.813Z",
+            "modified": "2023-06-27T09:45:12.959Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"title\": \"judul film\",\n  \"description\": \"film seru 2023\",\n  \"duration\": 112,\n  \"artist\": \"jack, udin, miltha\",\n  \"genres\": \"action, comedy\",\n  \"watch_url\": \"/home/rocketin/movies/moana.mp4\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "42e9f5bf-191f-4b36-8868-73cde3eee96c",
+            "colId": "348e470b-1988-4ad7-b1c2-4ab87b21c9bf",
+            "containerId": "799f242f-bdda-425c-b0a8-a1c93740882a",
+            "name": "Watch Movie",
+            "url": "localhost:8080/movies/1",
+            "method": "PUT",
+            "sortNum": 50000,
+            "created": "2023-06-27T09:49:56.923Z",
+            "modified": "2023-06-27T09:50:13.296Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        }
+    ]
+}
