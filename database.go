@@ -1,6 +1,8 @@
 package main
 
 import (
+	"rocketin-movie/models"
+
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )
@@ -22,4 +24,8 @@ func GetDBConnection() *gorm.DB {
 		con = connect()
 	}
 	return con
+}
+
+func Migrate(db *gorm.DB) {
+	db.AutoMigrate(&models.Movie{})
 }
