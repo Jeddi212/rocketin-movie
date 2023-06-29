@@ -14,7 +14,7 @@ func FetchAllMovies(db *gorm.DB) []models.Movie {
 	return movies
 }
 
-func FindMovies(db *gorm.DB, term models.MovieDTO) []models.Movie {
+func FindMovies(db *gorm.DB, term models.MovieSearchDTO) []models.Movie {
 	var movies []models.Movie
 
 	db.Where("title LIKE ? OR description LIKE ? OR artists LIKE ? OR genres LIKE ?",
@@ -34,29 +34,8 @@ func CreateMovie(db *gorm.DB, movie models.Movie) (models.Movie, error) {
 	return movie, result.Error
 }
 
-func UpdateMovie(db *gorm.DB, movie models.Movie, movieDTO models.Movie) error {
-	if movieDTO.Title != "" {
-		movie.Title = movieDTO.Title
-	}
-
-	if movieDTO.Description != "" {
-		movie.Description = movieDTO.Description
-	}
-
-	if movieDTO.Artists != "" {
-		movie.Artists = movieDTO.Artists
-	}
-
-	if movieDTO.Genres != "" {
-		movie.Genres = movieDTO.Genres
-	}
-
-	if movieDTO.WatchURL != "" {
-		movie.WatchURL = movieDTO.WatchURL
-	}
-
+func UpdateMovie(db *gorm.DB, movie models.Movie) error {
 	result := db.Save(&movie)
-
 	return result.Error
 }
 
