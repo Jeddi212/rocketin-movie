@@ -18,7 +18,8 @@ func FindMovies(db *gorm.DB, term models.MovieSearchDTO) []models.Movie {
 	var movies []models.Movie
 
 	db.Where("title LIKE ? OR description LIKE ? OR artists LIKE ? OR genres LIKE ?",
-		"%"+term.Title+"%", "%"+term.Description+"%", "%"+term.Artists+"%", "%"+term.Genres+"%").Find(&movies)
+		"%"+term.Title+"%", "%"+term.Description+"%", "%"+term.Artists+"%").Find(&movies)
+	// "%"+term.Title+"%", "%"+term.Description+"%", "%"+term.Artists+"%", "%"+term.Genres+"%").Find(&movies)
 
 	return movies
 }

@@ -3,17 +3,15 @@ package services
 import (
 	"rocketin-movie/models"
 	"rocketin-movie/repositories"
-	"strings"
 
 	"gorm.io/gorm"
 )
 
-func GetGenres(db *gorm.DB, n string) []models.Genre {
-	names := strings.Split(n, "")
+func GetGenres(db *gorm.DB, names []models.GenreDTO) []models.Genre {
 	var genres []models.Genre
 
-	for _, name := range names {
-		g, _ := repositories.FindGenreByName(db, name)
+	for _, genre := range names {
+		g, _ := repositories.FindGenreByName(db, genre.Name)
 
 		genres = append(genres, g)
 	}

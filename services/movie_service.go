@@ -1,8 +1,6 @@
 package services
 
 import (
-	"fmt"
-
 	"gorm.io/gorm"
 
 	"rocketin-movie/models"
@@ -10,7 +8,7 @@ import (
 )
 
 func SearchMovies(db *gorm.DB, dto models.MovieSearchDTO) []models.Movie {
-	if dto.Title == "" && dto.Description == "" && dto.Artists == "" && dto.Genres == "" {
+	if dto.Title == "" && dto.Description == "" && dto.Artists == "" && len(dto.Genres) == 0 {
 		return repositories.FetchAllMovies(db)
 	}
 	return repositories.FindMovies(db, dto)
@@ -33,7 +31,6 @@ func UpdateMovie(db *gorm.DB, movieID string, dto models.MovieCreateDTO) error {
 
 func WatchMovie(db *gorm.DB, movieID string) error {
 	movie, err := repositories.FindMovieByID(db, movieID)
-	fmt.Println("Sampe sini")
 	if err != nil {
 		return err
 	}
