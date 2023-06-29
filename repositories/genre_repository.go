@@ -8,6 +8,6 @@ import (
 
 func FindGenreByName(db *gorm.DB, name string) (models.Genre, error) {
 	var genre models.Genre
-	err := db.Where("name = ?", name).First(&genre).Error
+	err := db.First(&genre, name).Error
 	return genre, err
 }
