@@ -1,6 +1,6 @@
 package models
 
 type Genre struct {
-	Name string `json:"name" gorm:"primaryKey"`
-	View string `json:"view"`
+	Name      string `json:"name" gorm:"primaryKey"`
+	ViewCount int    `json:"viewCount"`
 }

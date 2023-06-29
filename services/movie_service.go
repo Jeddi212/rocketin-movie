@@ -15,17 +15,27 @@ func SearchMovies(db *gorm.DB, dto models.MovieSearchDTO) []models.Movie {
 }
 
 func CreateNewMovie(db *gorm.DB, dto models.MovieCreateDTO) (models.Movie, error) {
-	movie := MovieCreateMapper(dto, GetGenres(db, dto.Genres))
+	genres, err := GetGenres(db, dto.Genres)
+	if err != nil {
+		return models.Movie{}, err
+	}
+
+	movie := MovieCreateMapper(dto, genres)
 	return repositories.CreateMovie(db, movie)
 }
 
-func UpdateMovie(db *gorm.DB, movieID string, dto models.MovieCreateDTO) error {
+func UpdateMovie(db *gorm.DB, movieID string, dto models.MovieCreateDTO) (models.Movie, error) {
 	movie, err := repositories.FindMovieByID(db, movieID)
 	if err != nil {
-		return err
+		return models.Movie{}, err
 	}
 
-	movie = MovieUpdateMapper(dto, movie, GetGenres(db, dto.Genres))
+	genres, err := GetGenres(db, dto.Genres)
+	if err != nil {
+		return models.Movie{}, err
+	}
+
+	movie = MovieUpdateMapper(dto, movie, genres)
 	return repositories.UpdateMovie(db, movie)
 }
 
@@ -48,11 +58,15 @@ func MovieCreateMapper(dto models.MovieCreateDTO, genres []models.Genre) models.
 		movie.Description = dto.Description
 	}
 
+	if dto.Duration != 0 {
+		movie.Duration = dto.Duration
+	}
+
 	if dto.Artists != "" {
 		movie.Artists = dto.Artists
 	}
 
-	if len(genres) == 0 {
+	if len(genres) != 0 {
 		movie.Genres = genres
 	}
 
@@ -72,11 +86,15 @@ func MovieUpdateMapper(dto models.MovieCreateDTO, movie models.Movie, genres []m
 		movie.Description = dto.Description
 	}
 
+	if dto.Duration != 0 {
+		movie.Duration = dto.Duration
+	}
+
 	if dto.Artists != "" {
 		movie.Artists = dto.Artists
 	}
 
-	if len(genres) == 0 {
+	if len(genres) != 0 {
 		movie.Genres = genres
 	}
 

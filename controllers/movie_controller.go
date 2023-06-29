@@ -30,7 +30,7 @@ func (mc *MovieController) GetMovie(w http.ResponseWriter, r *http.Request) {
 	var movie []models.Movie = services.SearchMovies(mc.DB, dto)
 	var response models.Response = models.Response{
 		StatusCode: http.StatusOK,
-		Message:    "Success adding a new movie",
+		Message:    "Success fetching movie(s)",
 		Data:       movie,
 	}
 
@@ -46,14 +46,11 @@ func (mc *MovieController) CreateMovie(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	movie, errs := services.CreateNewMovie(mc.DB, dto)
+	movie, err := services.CreateNewMovie(mc.DB, dto)
 	var response models.Response
-	if errs != nil {
-		response = models.Response{
-			StatusCode: http.StatusInternalServerError,
-			Message:    "Failed to update Movie with ID",
-			Data:       errs,
-		}
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
 	} else {
 		response = models.Response{
 			StatusCode: http.StatusOK,
@@ -76,18 +73,19 @@ func (mc *MovieController) UpdateMovie(w http.ResponseWriter, r *http.Request) {
 
 	movieID := mux.Vars(r)["movie_id"]
 
-	err = services.UpdateMovie(mc.DB, movieID, dto)
+	movie, err := services.UpdateMovie(mc.DB, movieID, dto)
 	var response models.Response
 	if err != nil {
 		response = models.Response{
-			StatusCode: http.StatusInternalServerError,
+			StatusCode: http.StatusBadRequest,
 			Message:    "Failed to update Movie with ID " + movieID,
-			Data:       err,
+			Data:       err.Error(),
 		}
 	} else {
 		response = models.Response{
 			StatusCode: http.StatusOK,
 			Message:    "Success update movie with ID " + movieID,
+			Data:       movie,
 		}
 	}
 
@@ -102,9 +100,9 @@ func (mc *MovieController) WatchMovie(w http.ResponseWriter, r *http.Request) {
 	var response models.Response
 	if err != nil {
 		response = models.Response{
-			StatusCode: http.StatusInternalServerError,
+			StatusCode: http.StatusBadRequest,
 			Message:    "Failed to increment watch num of movie with ID " + movieID,
-			Data:       err,
+			Data:       err.Error(),
 		}
 	} else {
 		response = models.Response{

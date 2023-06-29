@@ -31,13 +31,14 @@ func FindMovieByID(db *gorm.DB, movieID string) (models.Movie, error) {
 }
 
 func CreateMovie(db *gorm.DB, movie models.Movie) (models.Movie, error) {
+	db.Model(&movie).Association("Genres")
 	result := db.Create(&movie)
 	return movie, result.Error
 }
 
-func UpdateMovie(db *gorm.DB, movie models.Movie) error {
+func UpdateMovie(db *gorm.DB, movie models.Movie) (models.Movie, error) {
 	result := db.Save(&movie)
-	return result.Error
+	return movie, result.Error
 }
 
 func IncrementWatchNumber(db *gorm.DB, movie models.Movie, movieID string) error {
