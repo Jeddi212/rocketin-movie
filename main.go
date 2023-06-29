@@ -6,16 +6,18 @@ import (
 
 	"fmt"
 
+	"rocketin-movie/database"
+	"rocketin-movie/routes"
+
 	"github.com/gorilla/mux"
 )
 
 func main() {
-	db := GetDBConnection()
-
-	Migrate(db)
+	db := database.GetDBConnection()
+	database.Migrate(db)
 
 	r := mux.NewRouter()
-	RegisterRoutes(db, r)
+	routes.RegisterRoutes(db, r)
 
 	http.Handle("/", r)
 	fmt.Println("Connected to port 8080")

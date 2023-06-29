@@ -1,24 +1,28 @@
 package repositories
 
 import (
+	"fmt"
 	"rocketin-movie/models"
+	"rocketin-movie/models/dto"
+
+	"strings"
 
 	"gorm.io/gorm"
 )
 
-func FetchAllMovies(db *gorm.DB) []models.Movie {
+func FetchAllMovies(db *gorm.DB, offset int, limit int) []models.Movie {
 	var movies []models.Movie
-
-	db.First(&movies)
-
+	fmt.Println(offset, limit)
+	db.Offset(offset).Limit(limit).Find(&movies)
 	return movies
 }
 
-func FindMovies(db *gorm.DB, term models.MovieDTO) []models.Movie {
+func FindMovies(db *gorm.DB, term dto.MovieSearchDTO) []models.Movie {
 	var movies []models.Movie
-
-	db.Where("title LIKE ? OR description LIKE ? OR artists LIKE ? OR genres LIKE ?",
-		"%"+term.Title+"%", "%"+term.Description+"%", "%"+term.Artists+"%", "%"+term.Genres+"%").Find(&movies)
+	db.Where("LOWER(title) LIKE ? OR LOWER(description) LIKE ? OR LOWER(artists) LIKE ?",
+		"%"+strings.ToLower(term.Title)+"%",
+		"%"+strings.ToLower(term.Description)+"%",
+		"%"+strings.ToLower(term.Artists)+"%").Find(&movies)
 
 	return movies
 }
@@ -30,34 +34,14 @@ func FindMovieByID(db *gorm.DB, movieID string) (models.Movie, error) {
 }
 
 func CreateMovie(db *gorm.DB, movie models.Movie) (models.Movie, error) {
+	db.Model(&movie).Association("Genres")
 	result := db.Create(&movie)
 	return movie, result.Error
 }
 
-func UpdateMovie(db *gorm.DB, movie models.Movie, movieDTO models.Movie) error {
-	if movieDTO.Title != "" {
-		movie.Title = movieDTO.Title
-	}
-
-	if movieDTO.Description != "" {
-		movie.Description = movieDTO.Description
-	}
-
-	if movieDTO.Artists != "" {
-		movie.Artists = movieDTO.Artists
-	}
-
-	if movieDTO.Genres != "" {
-		movie.Genres = movieDTO.Genres
-	}
-
-	if movieDTO.WatchURL != "" {
-		movie.WatchURL = movieDTO.WatchURL
-	}
-
+func UpdateMovie(db *gorm.DB, movie models.Movie) (models.Movie, error) {
 	result := db.Save(&movie)
-
-	return result.Error
+	return movie, result.Error
 }
 
 func IncrementWatchNumber(db *gorm.DB, movie models.Movie, movieID string) error {
