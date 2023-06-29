@@ -5,6 +5,7 @@ import (
 	"net/http"
 
 	"rocketin-movie/models"
+	"rocketin-movie/models/dto"
 	"rocketin-movie/services"
 
 	"gorm.io/gorm"
@@ -19,7 +20,7 @@ func NewGenreController(db *gorm.DB) *GenreController {
 }
 
 func (mc *GenreController) CreateGenre(w http.ResponseWriter, r *http.Request) {
-	var dto models.GenreDTO
+	var dto dto.GenreDTO
 	err := json.NewDecoder(r.Body).Decode(&dto)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)

@@ -1,4 +1,4 @@
-package models
+package dto
 
 type MovieSearchDTO struct {
 	Title       string     `json:"title"`

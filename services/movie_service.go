@@ -4,17 +4,21 @@ import (
 	"gorm.io/gorm"
 
 	"rocketin-movie/models"
+	"rocketin-movie/models/dto"
+	"rocketin-movie/models/extra"
 	"rocketin-movie/repositories"
 )
 
-func SearchMovies(db *gorm.DB, dto models.MovieSearchDTO) []models.Movie {
-	if dto.Title == "" && dto.Description == "" && dto.Artists == "" && len(dto.Genres) == 0 {
-		return repositories.FetchAllMovies(db)
-	}
+func SearchAllMovies(db *gorm.DB, pagination extra.Pagination) []models.Movie {
+	offset, limit := Paginate(pagination)
+	return repositories.FetchAllMovies(db, offset, limit)
+}
+
+func SearchMovies(db *gorm.DB, dto dto.MovieSearchDTO) []models.Movie {
 	return repositories.FindMovies(db, dto)
 }
 
-func CreateNewMovie(db *gorm.DB, dto models.MovieCreateDTO) (models.Movie, error) {
+func CreateNewMovie(db *gorm.DB, dto dto.MovieCreateDTO) (models.Movie, error) {
 	genres, err := GetGenres(db, dto.Genres)
 	if err != nil {
 		return models.Movie{}, err
@@ -24,7 +28,7 @@ func CreateNewMovie(db *gorm.DB, dto models.MovieCreateDTO) (models.Movie, error
 	return repositories.CreateMovie(db, movie)
 }
 
-func UpdateMovie(db *gorm.DB, movieID string, dto models.MovieCreateDTO) (models.Movie, error) {
+func UpdateMovie(db *gorm.DB, movieID string, dto dto.MovieCreateDTO) (models.Movie, error) {
 	movie, err := repositories.FindMovieByID(db, movieID)
 	if err != nil {
 		return models.Movie{}, err
@@ -47,7 +51,7 @@ func WatchMovie(db *gorm.DB, movieID string) error {
 	return repositories.IncrementWatchNumber(db, movie, movieID)
 }
 
-func MovieCreateMapper(dto models.MovieCreateDTO, genres []models.Genre) models.Movie {
+func MovieCreateMapper(dto dto.MovieCreateDTO, genres []models.Genre) models.Movie {
 	var movie models.Movie
 
 	if dto.Title != "" {
@@ -77,7 +81,7 @@ func MovieCreateMapper(dto models.MovieCreateDTO, genres []models.Genre) models.
 	return movie
 }
 
-func MovieUpdateMapper(dto models.MovieCreateDTO, movie models.Movie, genres []models.Genre) models.Movie {
+func MovieUpdateMapper(dto dto.MovieCreateDTO, movie models.Movie, genres []models.Genre) models.Movie {
 	if dto.Title != "" {
 		movie.Title = dto.Title
 	}
@@ -103,4 +107,18 @@ func MovieUpdateMapper(dto models.MovieCreateDTO, movie models.Movie, genres []m
 	}
 
 	return movie
+}
+
+func Paginate(pagination extra.Pagination) (int, int) {
+	offset, limit := (pagination.Page-1)*pagination.Limit, pagination.Limit
+
+	if offset < 1 {
+		offset = -1
+	}
+
+	if limit < 1 {
+		limit = 10
+	}
+
+	return offset, limit
 }

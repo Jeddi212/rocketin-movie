@@ -5,6 +5,8 @@ import (
 	"net/http"
 
 	"rocketin-movie/models"
+	"rocketin-movie/models/dto"
+	"rocketin-movie/models/extra"
 	"rocketin-movie/services"
 
 	"github.com/gorilla/mux"
@@ -19,8 +21,27 @@ func NewMovieController(db *gorm.DB) *MovieController {
 	return &MovieController{DB: db}
 }
 
+func (mc *MovieController) GetAllMovie(w http.ResponseWriter, r *http.Request) {
+	var pagination extra.Pagination
+	err := json.NewDecoder(r.Body).Decode(&pagination)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+
+	var movie []models.Movie = services.SearchAllMovies(mc.DB, pagination)
+	var response models.Response = models.Response{
+		StatusCode: http.StatusOK,
+		Message:    "Success fetching movie(s)",
+		Data:       movie,
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(response)
+}
+
 func (mc *MovieController) GetMovie(w http.ResponseWriter, r *http.Request) {
-	var dto models.MovieSearchDTO
+	var dto dto.MovieSearchDTO
 	err := json.NewDecoder(r.Body).Decode(&dto)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
@@ -39,7 +60,7 @@ func (mc *MovieController) GetMovie(w http.ResponseWriter, r *http.Request) {
 }
 
 func (mc *MovieController) CreateMovie(w http.ResponseWriter, r *http.Request) {
-	var dto models.MovieCreateDTO
+	var dto dto.MovieCreateDTO
 	err := json.NewDecoder(r.Body).Decode(&dto)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
@@ -64,7 +85,7 @@ func (mc *MovieController) CreateMovie(w http.ResponseWriter, r *http.Request) {
 }
 
 func (mc *MovieController) UpdateMovie(w http.ResponseWriter, r *http.Request) {
-	var dto models.MovieCreateDTO
+	var dto dto.MovieCreateDTO
 	err := json.NewDecoder(r.Body).Decode(&dto)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
