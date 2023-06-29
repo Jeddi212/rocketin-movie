@@ -10,7 +10,7 @@ type Movie struct {
 	Description string  `json:"description"`
 	Duration    int     `json:"duration"`
 	Artists     string  `json:"artists"`
-	Genres      []Genre `json:"genres"`
+	Genres      []Genre `json:"genres" gorm:"many2many:movie_genres;"`
 	Watch       int     `json:"watch"`
 	WatchURL    string  `json:"watch_url"`
 }
