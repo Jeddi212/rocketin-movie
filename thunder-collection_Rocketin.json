@@ -1,7 +1,7 @@
 {
     "client": "Thunder Client",
     "collectionName": "Rocketin",
-    "dateExported": "2023-06-27T17:43:43.850Z",
+    "dateExported": "2023-06-30T06:02:33.107Z",
     "version": "1.1",
     "folders": [
         {
@@ -10,6 +10,20 @@
             "containerId": "",
             "created": "2023-06-27T17:17:49.669Z",
             "sortNum": 10000
+        },
+        {
+            "_id": "8c269ec8-a918-4fc3-a7c2-8d3fe32aca44",
+            "name": "Genre",
+            "containerId": "",
+            "created": "2023-06-29T14:33:54.920Z",
+            "sortNum": 20000
+        },
+        {
+            "_id": "e64fd950-e2bf-49c4-a2e6-cb730f6a9965",
+            "name": "Most",
+            "containerId": "",
+            "created": "2023-06-30T05:08:39.473Z",
+            "sortNum": 30000
         }
     ],
     "requests": [
@@ -17,17 +31,36 @@
             "_id": "a09a7d4b-39a2-4d72-9f8b-f5920df4bbcb",
             "colId": "3f84e5d1-6694-4cac-9a79-54001e043504",
             "containerId": "83e5e327-0268-494f-98d7-e7e87b28c284",
-            "name": "Find Movie",
-            "url": "localhost:8080/movies",
+            "name": "Find All Movie",
+            "url": "localhost:8080/movies-all",
             "method": "GET",
             "sortNum": 20000,
             "created": "2023-06-27T17:17:49.671Z",
-            "modified": "2023-06-27T17:41:04.616Z",
+            "modified": "2023-06-30T04:20:35.335Z",
             "headers": [],
             "params": [],
             "body": {
                 "type": "json",
-                "raw": "{\n  \"title\": \"baru nih\",\n  \"description\": \"film seru 2023\",\n  \"artists\": \"jack, udin, miltha\",\n  \"genres\": \"action, comedy\"\n}",
+                "raw": "{\n  \"page\": 1,\n  \"limit\": 0\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "9c4bdd04-d2ac-4996-934e-c1a73f327c2c",
+            "colId": "3f84e5d1-6694-4cac-9a79-54001e043504",
+            "containerId": "83e5e327-0268-494f-98d7-e7e87b28c284",
+            "name": "Find Movie By Title | Description | Artist",
+            "url": "localhost:8080/movies",
+            "method": "GET",
+            "sortNum": 25000,
+            "created": "2023-06-29T16:07:16.108Z",
+            "modified": "2023-06-29T16:17:50.161Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"title\": \"ma\",\n  \"description\": \"balon\",\n  \"artists\": \"jack, udin, miltha\"\n}",
                 "form": []
             },
             "tests": []
@@ -37,16 +70,16 @@
             "colId": "3f84e5d1-6694-4cac-9a79-54001e043504",
             "containerId": "83e5e327-0268-494f-98d7-e7e87b28c284",
             "name": "Create Movie",
-            "url": "localhost:8080/create-movies",
+            "url": "localhost:8080/create-movie",
             "method": "POST",
             "sortNum": 30000,
             "created": "2023-06-27T17:17:49.672Z",
-            "modified": "2023-06-27T17:34:18.505Z",
+            "modified": "2023-06-30T04:22:19.326Z",
             "headers": [],
             "params": [],
             "body": {
                 "type": "json",
-                "raw": "{\n  \"title\": \"judulfilm cerita cinta\",\n  \"description\": \"waduh euy\",\n  \"duration\": 97,\n  \"artists\": \"jack, udin, miltha\",\n  \"genres\": \"romance, thriller\",\n  \"watch_url\": \"/home/rocketin/movies/aadc.mp4\"\n}",
+                "raw": "{\n  \"title\": \"Realme Open 2022\",\n  \"description\": \"sadsC\",\n  \"duration\": 10,\n  \"artists\": \"andy, billy\",\n  \"genres\": [\n    {\"name\": \"sci-fi\"}\n  ],\n  \"watch_url\": \"/home/rocketin/movies/realme2022.mp4\"\n}",
                 "form": []
             },
             "tests": []
@@ -56,16 +89,16 @@
             "colId": "3f84e5d1-6694-4cac-9a79-54001e043504",
             "containerId": "83e5e327-0268-494f-98d7-e7e87b28c284",
             "name": "Update Movie",
-            "url": "localhost:8080/movies/1",
+            "url": "localhost:8080/movie/4",
             "method": "PUT",
             "sortNum": 40000,
             "created": "2023-06-27T17:17:49.673Z",
-            "modified": "2023-06-27T17:37:54.410Z",
+            "modified": "2023-06-30T05:55:54.785Z",
             "headers": [],
             "params": [],
             "body": {
                 "type": "json",
-                "raw": "{\n  \"title\": \"baru nih\",\n  \"description\": \"film seru 2023\",\n  \"duration\": 112,\n  \"artists\": \"jack, udin, miltha\",\n  \"genres\": \"action, comedy\",\n  \"watch_url\": \"/home/rocketin/movies/moana.mp4\"\n}",
+                "raw": "{\n  \"title\": \"Realme Open 2022\",\n    \"description\": \"film tahunan smartphone Realme Indonesia\",\n    \"duration\": 111,\n    \"artists\": \"andy, billy\",\n    \"genres\": [\n      {\"name\": \"religion\"},\n      {\"name\": \"superhero\"}\n    ],\n    \"watch_url\": \"/home/rocketin/movies/realme2022.mp4\"\n}",
                 "form": []
             },
             "tests": []
@@ -75,11 +108,44 @@
             "colId": "3f84e5d1-6694-4cac-9a79-54001e043504",
             "containerId": "83e5e327-0268-494f-98d7-e7e87b28c284",
             "name": "Watch Movie",
-            "url": "localhost:8080/watch/1",
+            "url": "localhost:8080/watch/2",
             "method": "PUT",
             "sortNum": 50000,
             "created": "2023-06-27T17:17:49.674Z",
-            "modified": "2023-06-27T17:31:30.438Z",
+            "modified": "2023-06-30T04:10:17.351Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "e0f59e1a-f2c8-4f27-a68c-f9334e5c9d65",
+            "colId": "3f84e5d1-6694-4cac-9a79-54001e043504",
+            "containerId": "8c269ec8-a918-4fc3-a7c2-8d3fe32aca44",
+            "name": "Create Genre",
+            "url": "localhost:8080/create-genre",
+            "method": "POST",
+            "sortNum": 60000,
+            "created": "2023-06-29T14:34:04.768Z",
+            "modified": "2023-06-29T15:29:28.228Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"name\": \"action\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "fb3b9b4a-bc0d-417a-bab6-a1702e66bc70",
+            "colId": "3f84e5d1-6694-4cac-9a79-54001e043504",
+            "containerId": "e64fd950-e2bf-49c4-a2e6-cb730f6a9965",
+            "name": "Viewed Movie & Genre",
+            "url": "localhost:8080/most-viewed",
+            "method": "GET",
+            "sortNum": 70000,
+            "created": "2023-06-30T05:08:55.864Z",
+            "modified": "2023-06-30T05:09:05.410Z",
             "headers": [],
             "params": [],
             "tests": []
