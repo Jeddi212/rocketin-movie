@@ -39,6 +39,16 @@ func UpdateMovie(db *gorm.DB, movieID string, dto dto.MovieCreateDTO) (models.Mo
 		return models.Movie{}, err
 	}
 
+	err = repositories.ClearMovieGenre(db, movie.ID)
+	if err != nil {
+		return models.Movie{}, err
+	}
+
+	err = DecrementGenreViews(db, movie.Genres)
+	if err != nil {
+		return models.Movie{}, err
+	}
+
 	movie = MovieUpdateMapper(dto, movie, genres)
 	return repositories.UpdateMovie(db, movie)
 }

@@ -41,6 +41,16 @@ func WatchGenre(db *gorm.DB, genres []models.Genre) error {
 	return nil
 }
 
+func DecrementGenreViews(db *gorm.DB, genres []models.Genre) error {
+	for _, genre := range genres {
+		err := repositories.DecrementGenreViews(db, genre)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
 func GenreCreateMapper(dto dto.GenreDTO) models.Genre {
 	return models.Genre{
 		Name: dto.Name,
