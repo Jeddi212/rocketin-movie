@@ -16,3 +16,8 @@ func CreateGenre(db *gorm.DB, genre models.Genre) (models.Genre, error) {
 	err := db.Create(&genre).Error
 	return genre, err
 }
+
+func IncrementGenreViews(db *gorm.DB, genre models.Genre) error {
+	genre.ViewCount += 1
+	return db.Save(&genre).Error
+}

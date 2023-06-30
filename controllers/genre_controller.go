@@ -4,8 +4,8 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"rocketin-movie/models"
 	"rocketin-movie/models/dto"
+	"rocketin-movie/models/extra"
 	"rocketin-movie/services"
 
 	"gorm.io/gorm"
@@ -28,15 +28,15 @@ func (mc *GenreController) CreateGenre(w http.ResponseWriter, r *http.Request) {
 	}
 
 	genre, err := services.CreateNewGenre(mc.DB, dto)
-	var response models.Response
+	var response extra.Response
 	if err != nil {
-		response = models.Response{
+		response = extra.Response{
 			StatusCode: http.StatusInternalServerError,
 			Message:    "Failed to add a new genre",
 			Data:       err,
 		}
 	} else {
-		response = models.Response{
+		response = extra.Response{
 			StatusCode: http.StatusOK,
 			Message:    "Success adding a new genre",
 			Data:       genre,

@@ -28,6 +28,19 @@ func CreateNewGenre(db *gorm.DB, dto dto.GenreDTO) (models.Genre, error) {
 	return repositories.CreateGenre(db, GenreCreateMapper(dto))
 }
 
+func WatchGenre(db *gorm.DB, genres []models.Genre) error {
+	for _, genre := range genres {
+		genre, _ := repositories.FindGenreByName(db, genre.Name)
+		err := repositories.IncrementGenreViews(db, genre)
+
+		if err != nil {
+			return err
+		}
+	}
+
+	return nil
+}
+
 func GenreCreateMapper(dto dto.GenreDTO) models.Genre {
 	return models.Genre{
 		Name: dto.Name,
