@@ -48,7 +48,12 @@ func WatchMovie(db *gorm.DB, movieID string) error {
 	if err != nil {
 		return err
 	}
-	return repositories.IncrementWatchNumber(db, movie, movieID)
+
+	err = WatchGenre(db, movie.Genres)
+	if err != nil {
+		return err
+	}
+	return repositories.IncrementWatchNumber(db, movie)
 }
 
 func MovieCreateMapper(dto dto.MovieCreateDTO, genres []models.Genre) models.Movie {
