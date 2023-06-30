@@ -50,3 +50,12 @@ func IncrementWatchNumber(db *gorm.DB, movie models.Movie) error {
 	movie.Watch += 1
 	return db.Save(&movie).Error
 }
+
+func FetchMostViewedMovie(db *gorm.DB) ([]models.Movie, error) {
+	var movie []models.Movie
+	result := db.Raw("SELECT * FROM movies WHERE watch = (" +
+		"SELECT MAX(watch)" +
+		"FROM movies" +
+		")").Scan(&movie)
+	return movie, result.Error
+}

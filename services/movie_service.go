@@ -30,11 +30,7 @@ func CreateNewMovie(db *gorm.DB, dto dto.MovieCreateDTO) (models.Movie, error) {
 
 func UpdateMovie(db *gorm.DB, movieID string, dto dto.MovieCreateDTO) (models.Movie, error) {
 	movie, err := repositories.FindMovieByID(db, movieID)
-	if err != nil {
-		return models.Movie{}, err
-	}
 
-	genres, err := GetGenres(db, dto.Genres)
 	if err != nil {
 		return models.Movie{}, err
 	}
@@ -45,6 +41,16 @@ func UpdateMovie(db *gorm.DB, movieID string, dto dto.MovieCreateDTO) (models.Mo
 	}
 
 	err = DecrementGenreViews(db, movie.Genres)
+	if err != nil {
+		return models.Movie{}, err
+	}
+
+	genres, err := GetGenres(db, dto.Genres)
+	if err != nil {
+		return models.Movie{}, err
+	}
+
+	err = IncrementGenreViews(db, genres)
 	if err != nil {
 		return models.Movie{}, err
 	}

@@ -26,3 +26,12 @@ func DecrementGenreViews(db *gorm.DB, genre models.Genre) error {
 	genre.ViewCount -= 1
 	return db.Save(&genre).Error
 }
+
+func FetchMostViewedGenre(db *gorm.DB) ([]models.Genre, error) {
+	var genre []models.Genre
+	result := db.Raw("SELECT * FROM genres WHERE view_count = (" +
+		"SELECT MAX(view_count)" +
+		"FROM genres" +
+		")").Scan(&genre)
+	return genre, result.Error
+}
