@@ -42,6 +42,10 @@ func UpdateMovie(db *gorm.DB, movie models.Movie) (models.Movie, error) {
 	return movie, result.Error
 }
 
+func ClearMovieGenre(db *gorm.DB, movieID uint) error {
+	return db.Unscoped().Exec("DELETE FROM movie_genres WHERE movie_id = ?", movieID).Error
+}
+
 func IncrementWatchNumber(db *gorm.DB, movie models.Movie) error {
 	movie.Watch += 1
 	return db.Save(&movie).Error
