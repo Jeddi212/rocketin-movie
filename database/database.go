@@ -27,5 +27,5 @@ func GetDBConnection() *gorm.DB {
 }
 
 func Migrate(db *gorm.DB) {
-	db.AutoMigrate(&models.Movie{}, &models.Genre{}, &models.User{}, &models.Votes{})
+	db.AutoMigrate(&models.Movie{}, &models.Genre{}, &models.User{})
 }
