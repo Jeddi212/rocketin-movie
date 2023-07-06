@@ -35,3 +35,21 @@ func (mc *MostController) GetMostViewed(w http.ResponseWriter, r *http.Request) 
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(response)
 }
+
+func (mc *MostController) GetMostVoted(w http.ResponseWriter, r *http.Request) {
+	mostVoted, err := services.ListMostVotedMovieAndViewedGenre(mc.DB)
+
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+
+	response := extra.Response{
+		StatusCode: http.StatusOK,
+		Message:    "Success get the most voted movie(s) and viewed genre",
+		Data:       mostVoted,
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(response)
+}
