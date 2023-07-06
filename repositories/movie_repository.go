@@ -31,6 +31,12 @@ func FindMovieByID(db *gorm.DB, movieID string) (models.Movie, error) {
 	return movie, result.Error
 }
 
+func FindMovieByIds(db *gorm.DB, movieIds []int) ([]models.Movie, error) {
+	var movies []models.Movie
+	result := db.Preload("Genres").Find(&movies, movieIds)
+	return movies, result.Error
+}
+
 func CreateMovie(db *gorm.DB, movie models.Movie) (models.Movie, error) {
 	db.Model(&movie).Association("Genres")
 	result := db.Create(&movie)

@@ -54,3 +54,17 @@ func DownVoteMovie(db *gorm.DB, movieID string, dto dto.VoteDTO) (models.Movie, 
 
 	return movie, nil
 }
+
+func ListUserVotes(db *gorm.DB, username string) ([]models.Movie, error) {
+	movieIds, err := repositories.FetchUserVotes(db, username)
+	if err != nil {
+		return nil, err
+	}
+
+	movies, err := repositories.FindMovieByIds(db, movieIds)
+	if err != nil {
+		return nil, err
+	}
+
+	return movies, nil
+}

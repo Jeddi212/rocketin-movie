@@ -78,3 +78,26 @@ func (vc *VoteController) DownvoteMovie(w http.ResponseWriter, r *http.Request) 
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(response)
 }
+
+func (vc *VoteController) GetUserVotes(w http.ResponseWriter, r *http.Request) {
+	username := mux.Vars(r)["username"]
+
+	movies, err := services.ListUserVotes(vc.DB, username)
+	var response extra.Response
+	if err != nil {
+		response = extra.Response{
+			StatusCode: http.StatusBadRequest,
+			Message:    "Failed to retrieve user votes",
+			Data:       err.Error(),
+		}
+	} else {
+		response = extra.Response{
+			StatusCode: http.StatusOK,
+			Message:    "Success to retrieve user votes",
+			Data:       movies,
+		}
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(response)
+}
