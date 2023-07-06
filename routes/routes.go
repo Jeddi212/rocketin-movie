@@ -14,6 +14,7 @@ func RegisterRoutes(db *gorm.DB, e *mux.Router) {
 	movieController := controllers.NewMovieController(db)
 	genreController := controllers.NewGenreController(db)
 	mostController := controllers.NewMostController(db)
+	voteController := controllers.NewVoteController(db)
 	userController := controllers.NewUserController(db)
 
 	e.HandleFunc("/movies-all", movieController.GetAllMovie).Methods(http.MethodGet)
@@ -25,6 +26,8 @@ func RegisterRoutes(db *gorm.DB, e *mux.Router) {
 	e.HandleFunc("/create-genre", genreController.CreateGenre).Methods(http.MethodPost)
 
 	e.HandleFunc("/most-viewed", mostController.GetMostViewed).Methods(http.MethodGet)
+
+	e.HandleFunc("/upvote/{movie_id}", voteController.UpvoteMovie).Methods(http.MethodPost)
 
 	e.HandleFunc("/register", userController.Register).Methods(http.MethodPost)
 }
