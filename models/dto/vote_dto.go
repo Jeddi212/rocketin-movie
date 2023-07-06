@@ -1,5 +1,5 @@
 package dto
 
-type UpVoteDTO struct {
+type VoteDTO struct {
 	Username string `json:"username"`
 }

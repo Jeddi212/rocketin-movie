@@ -28,6 +28,7 @@ func RegisterRoutes(db *gorm.DB, e *mux.Router) {
 	e.HandleFunc("/most-viewed", mostController.GetMostViewed).Methods(http.MethodGet)
 
 	e.HandleFunc("/upvote/{movie_id}", voteController.UpvoteMovie).Methods(http.MethodPost)
+	e.HandleFunc("/downvote/{movie_id}", voteController.DownvoteMovie).Methods(http.MethodDelete)
 
 	e.HandleFunc("/register", userController.Register).Methods(http.MethodPost)
 }
