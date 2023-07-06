@@ -1,6 +1,7 @@
 package services
 
 import (
+	"errors"
 	"rocketin-movie/models"
 	"rocketin-movie/models/extra"
 	"rocketin-movie/repositories"
@@ -22,7 +23,16 @@ func SearchMostViewed(db *gorm.DB) (extra.MostViewed, error) {
 	return MostViewedMapper(movie, genre), nil
 }
 
-func ListMostVotedMovieAndViewedGenre(db *gorm.DB) (extra.MostVotedMovieAndViewedGenre, error) {
+func ListMostVotedMovieAndViewedGenre(db *gorm.DB, username string) (extra.MostVotedMovieAndViewedGenre, error) {
+	user, err := repositories.FindUserById(db, username)
+	if err != nil {
+		return extra.MostVotedMovieAndViewedGenre{}, err
+	}
+
+	if user.Level < 2 {
+		return extra.MostVotedMovieAndViewedGenre{}, errors.New("only admins can access this endpoint")
+	}
+
 	mostVotedMovie, err := repositories.FetchMostVotesMovies(db)
 	if err != nil {
 		return extra.MostVotedMovieAndViewedGenre{}, err

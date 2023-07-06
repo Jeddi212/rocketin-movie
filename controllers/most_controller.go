@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"net/http"
 
+	"rocketin-movie/models/dto"
 	"rocketin-movie/models/extra"
 	"rocketin-movie/services"
 
@@ -37,7 +38,14 @@ func (mc *MostController) GetMostViewed(w http.ResponseWriter, r *http.Request) 
 }
 
 func (mc *MostController) GetMostVoted(w http.ResponseWriter, r *http.Request) {
-	mostVoted, err := services.ListMostVotedMovieAndViewedGenre(mc.DB)
+	var dto dto.VoteDTO
+	err := json.NewDecoder(r.Body).Decode(&dto)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+
+	mostVoted, err := services.ListMostVotedMovieAndViewedGenre(mc.DB, dto.Username)
 
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
